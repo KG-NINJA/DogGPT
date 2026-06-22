@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dog Talker for ChatGPT</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts から Outfit と Noto Sans JP を読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ヘッダー -->
+        <header class="app-header">
+            <h1 class="app-title">🐾 DOG TALKER</h1>
+            <p class="app-subtitle" id="app-subtitle">犬が自分でChatGPTに話しかけるタッチボード</p>
+        </header>
+
+        <!-- メインのワード選択グリッド -->
+        <main class="word-grid">
+            <button class="word-button color-yellow" data-word-ja="おやつ" data-word-en="Treat">
+                <span class="emoji">🍖</span>
+                <span class="label" id="label-treat">おやつ</span>
+            </button>
+            <button class="word-button color-blue" data-word-ja="さんぽ" data-word-en="Walk">
+                <span class="emoji">🦮</span>
+                <span class="label" id="label-walk">さんぽ</span>
+            </button>
+            <button class="word-button color-yellow" data-word-ja="あそぼう" data-word-en="Play">
+                <span class="emoji">🥎</span>
+                <span class="label" id="label-play">あそぼう</span>
+            </button>
+            <button class="word-button color-blue" data-word-ja="なでて" data-word-en="Pet me">
+                <span class="emoji">🙌</span>
+                <span class="label" id="label-pet">なでて</span>
+            </button>
+            <button class="word-button color-yellow" data-word-ja="おそと" data-word-en="Outside">
+                <span class="emoji">🚪</span>
+                <span class="label" id="label-outside">おそと</span>
+            </button>
+            <button class="word-button color-blue" data-word-ja="おなかすいた" data-word-en="Hungry">
+                <span class="emoji">😋</span>
+                <span class="label" id="label-hungry">おなかすいた</span>
+            </button>
+            <button class="word-button color-yellow" data-word-ja="みず" data-word-en="Water">
+                <span class="emoji">💧</span>
+                <span class="label" id="label-water">みず</span>
+            </button>
+            <button class="word-button color-blue" data-word-ja="だいすき" data-word-en="Love you">
+                <span class="emoji">❤️</span>
+                <span class="label" id="label-love">だいすき</span>
+            </button>
+        </main>
+
+        <!-- コントロール・結果表示エリア -->
+        <section class="owner-panel">
+            <!-- 選択された言葉の表示 -->
+            <div class="selected-display">
+                <span class="display-placeholder" id="display-placeholder">ボタンをタッチしてね！</span>
+                <span class="display-text" id="selected-word"></span>
+            </div>
+
+            <!-- 操作・設定バー -->
+            <div class="settings-bar">
+                <button id="reset-btn" class="reset-btn">🔄 RESET</button>
+                
+                <div class="switches-group">
+                    <!-- 言語切替トグル -->
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="lang-toggle">
+                        <span class="slider lang-slider"></span>
+                        <span class="toggle-label" id="lang-label">🌐 EN / JA</span>
+                    </label>
+
+                    <!-- 音声合成トグル -->
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="tts-toggle" checked>
+                        <span class="slider"></span>
+                        <span class="toggle-label" id="tts-label">🔊 音声</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ChatGPT 連携アクション -->
+            <div class="action-container" id="action-area" style="display: none;">
+                <div class="clip-info">
+                    <p class="status-msg" id="status-msg">📋 クリップボードに「犬の言葉」をコピーしました！</p>
+                    <div class="preview-prompt" id="prompt-preview"></div>
+                </div>
+                <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="chatgpt-btn" id="open-gpt-btn">
+                    💬 ChatGPT
+                </a>
+                <p class="instruction" id="instruction-msg">※別ウィンドウで開いたChatGPTの入力欄に「貼り付け」して送信してください。</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- パーティクル演出用のコンテナ -->
+    <div id="particle-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

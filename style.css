@@ -1,0 +1,401 @@
+﻿/* --------------------------------------
+   Dog Talker Design System (style.css)
+   犬が認識しやすい青・黄を基調とした
+   レスポンシブ・フルスクリーンUI
+-------------------------------------- */
+
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --text-light: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    /* 犬の認識カラー */
+    --dog-blue: #007bff;
+    --dog-blue-hover: #3b82f6;
+    --dog-yellow: #eab308;
+    --dog-yellow-hover: #facc15;
+    
+    --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.4);
+    --shadow-glow-yellow: 0 0 20px rgba(234, 179, 8, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* タブレット・スマホのタップ時の枠を非表示化 */
+}
+
+/* スクロールを制限し、全体を画面にフィットさせる設定 */
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-dark);
+}
+
+body {
+    color: var(--text-light);
+    font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+/* アプリ全体コンテナ - ビューポート高さにフィット */
+.app-container {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 96vh; /* タブレットやスマホの高さ制限 */
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ヘッダー */
+.app-header {
+    text-align: center;
+    flex-shrink: 0; /* 縮まないように固定 */
+}
+
+.app-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, var(--dog-yellow), var(--dog-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.app-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ワード選択グリッド (縦横に伸縮し画面スペースを最大限活用) */
+.word-grid {
+    flex-grow: 1; /* グリッドエリアが余白を埋める */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr); /* 2x4レイアウト */
+    gap: 10px;
+    min-height: 0; /* Firefox用のflex子要素はみ出し対策 */
+}
+
+/* 犬用タッチボタン */
+.word-button {
+    border: none;
+    border-radius: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row; /* 横並びにすることで文字サイズを確保 */
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 8px 16px;
+    font-size: 1.5rem;
+    transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 青色ボタン */
+.word-button.color-blue {
+    background: linear-gradient(135deg, #1e3a8a, var(--dog-blue));
+    color: #ffffff;
+    border-bottom: 5px solid #1d4ed8;
+}
+
+.word-button.color-blue:active,
+.word-button.color-blue.active {
+    transform: translateY(3px);
+    border-bottom: 2px solid #1d4ed8;
+    box-shadow: var(--shadow-glow-blue);
+    background: var(--dog-blue-hover);
+}
+
+/* 黄色ボタン */
+.word-button.color-yellow {
+    background: linear-gradient(135deg, #854d0e, var(--dog-yellow));
+    color: #0f172a;
+    border-bottom: 5px solid #ca8a04;
+}
+
+.word-button.color-yellow:active,
+.word-button.color-yellow.active {
+    transform: translateY(3px);
+    border-bottom: 2px solid #ca8a04;
+    box-shadow: var(--shadow-glow-yellow);
+    background: var(--dog-yellow-hover);
+}
+
+.word-button .emoji {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+    transition: transform 0.15s ease;
+}
+
+.word-button:active .emoji,
+.word-button.active .emoji {
+    transform: scale(1.15);
+}
+
+.word-button .label {
+    letter-spacing: 0.05em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* オーナーパネル (画面にフィットするようコンパクトに) */
+.owner-panel {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 16px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0; /* 下部操作パネルの高さを固定 */
+}
+
+/* 選択ワードの表示 */
+.selected-display {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 6px;
+    border-left: 4px solid var(--dog-blue);
+}
+
+.display-placeholder {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.display-text {
+    color: var(--dog-yellow);
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
+/* 設定バー */
+.settings-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.switches-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.reset-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.reset-btn:hover {
+    background: #dc2626;
+}
+
+.toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.slider {
+    width: 32px;
+    height: 18px;
+    background-color: #475569;
+    border-radius: 18px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+    background-color: var(--dog-blue);
+}
+
+.toggle-switch input:checked + .slider::before {
+    left: 17px;
+}
+
+/* 国旗などのデザインをイメージした言語用スライダカラー */
+.lang-slider {
+    background-color: #334155;
+}
+
+.toggle-switch input:checked + .lang-slider {
+    background-color: var(--dog-yellow);
+}
+
+/* クリップボード＆別窓起動エリア */
+.action-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+    animation: fadeIn 0.3s ease;
+}
+
+.clip-info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+.status-msg {
+    font-size: 0.75rem;
+    color: #60a5fa;
+    margin-bottom: 2px;
+}
+
+.preview-prompt {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+    background: rgba(0,0,0,0.3);
+    padding: 6px 10px;
+    border-radius: 6px;
+    word-break: break-all;
+    border-left: 2px solid var(--dog-yellow);
+}
+
+.chatgpt-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s;
+}
+
+.chatgpt-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(16, 185, 129, 0.4);
+}
+
+.instruction {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* パーティクルエフェクト */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: bubbleUp 0.8s ease-out forwards;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bubbleUp {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(1.5) rotate(var(--r));
+        opacity: 0;
+    }
+}
+
+/* 横画面・大きめのタブレット対応 */
+@media (min-width: 768px) {
+    .word-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr); /* 横長のタブレット向けに4x2レイアウトに変更 */
+    }
+    .word-button {
+        flex-direction: column;
+        font-size: 1.6rem;
+        padding: 16px;
+    }
+    .word-button .emoji {
+        font-size: 3rem;
+    }
+}
+
+/* スマートフォンの縦画面向け調整 */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 12px;
+        gap: 8px;
+        max-height: 98vh;
+    }
+    .app-title {
+        font-size: 1.5rem;
+    }
+    .word-button {
+        font-size: 1.2rem;
+        padding: 6px;
+        gap: 8px;
+        border-radius: 12px;
+    }
+    .word-button .emoji {
+        font-size: 1.8rem;
+    }
+    .selected-display {
+        min-height: 38px;
+    }
+    .display-text {
+        font-size: 1.1rem;
+    }
+}
